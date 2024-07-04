@@ -1,21 +1,44 @@
-var builder = WebApplication.CreateBuilder(args);
+// <ms_docref_import_types>
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+// </ms_docref_import_types>
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// <ms_docref_add_msal>
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+IEnumerable<string>? initialScopes = builder.Configuration["DownstreamApi:Scopes"]?.Split(' ');
 
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
+builder.Services.AddMicrosoftIdentityWebAppAuthentication(builder.Configuration, "AzureAd")
+    .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
+        .AddDownstreamApi("DownstreamApi", builder.Configuration.GetSection("DownstreamApi"))
+        .AddInMemoryTokenCaches();
+// </ms_docref_add_msal>
+
+// <ms_docref_add_default_controller_for_sign-in-out>
+builder.Services.AddRazorPages().AddMvcOptions(options =>
+    {
+        var policy = new AuthorizationPolicyBuilder()
+                      .RequireAuthenticatedUser()
+                      .Build();
+        options.Filters.Add(new AuthorizeFilter(policy));
+    }).AddMicrosoftIdentityUI();
+// </ms_docref_add_default_controller_for_sign-in-out>
+
+// <ms_docref_enable_authz_capabilities>
+WebApplication app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+// </ms_docref_enable_authz_capabilities>
+
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
-
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
