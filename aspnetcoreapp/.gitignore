@@ -14,3 +14,9 @@ aspnetcoreapp/obj/Debug/net8.0/refint/aspnetcoreapp.dll
 aspnetcoreapp/obj/aspnetcoreapp.csproj.nuget.dgspec.json
 aspnetcoreapp/obj/project.assets.json
 aspnetcoreapp/obj/project.nuget.cache
+
+**/bin/
+**/obj/
+*.sln
+*.user
+*.vscode/
