@@ -20,3 +20,12 @@ aspnetcoreapp/obj/project.nuget.cache
 *.sln
 *.user
 *.vscode/
+
+# Ignore all bin and obj directories
+aspnetcoreapp/bin/
+aspnetcoreapp/obj/
+
+# Optional: Ignore specific files or directories (already covered by the above rules)
+# aspnetcoreapp/bin/Debug/net8.0/
+# aspnetcoreapp/obj/Debug/net8.0/
+# aspnetcoreapp/obj/
