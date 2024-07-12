@@ -18,7 +18,7 @@ public class Report {
     public int TransactionId { get; set;}
 
     [ForeignKey("TransactionId")]
-    public Transaction? Transaction { get; set;}
+    public Transaction Transaction { get; set;}
 
     public decimal ExpenseTotal { get; set;}
 
@@ -30,4 +30,5 @@ public class Report {
     
     public string? Description { get; set;}
 
+    public ICollection<Transaction> Transactions { get; set; }
 }

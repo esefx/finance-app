@@ -36,17 +36,17 @@ public class ApplicationDbContext : DbContext
         // Configure Report entity
         modelBuilder.Entity<Report>()
             .HasKey(r => r.Id); // Primary key configuration
+        
+        modelBuilder.Entity<Report>()
+            .HasMany(r => r.Transactions) //Every report has many transactions
+            .WithMany(t => t.Reports) //Every transaction can be in many reports
+            .UsingEntity(j => j.ToTable("ReportTransaction")); // define joint table name
+
 
         modelBuilder.Entity<Report>()
             .HasOne(r => r.User) // Every report has one user
             .WithMany(u => u.Reports) // User has many reports
             .HasForeignKey(r => r.UserId) // Foreign key to UserId in Report
-            .OnDelete(DeleteBehavior.Restrict); // Do not cascade delete
-
-        modelBuilder.Entity<Report>()
-            .HasMany(r => r.Transaction) // Every report has many transactions
-            .WithMany(t => t.Reports) // Transaction has many reports
-            .HasForeignKey(r => r.TransactionId) // Foreign key to TransactionId in Report
             .OnDelete(DeleteBehavior.Restrict); // Do not cascade delete
 
         // Configure User entity

@@ -1,4 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 public class User {
     [Key]
@@ -17,4 +20,8 @@ public class User {
     public string Email { get; set; }
 
     public string PasswordHash { get;  set; }
+
+    public ICollection<Report> Reports { get; set; }
+    public ICollection<Transaction> Transactions { get; set;}
+
 }

@@ -19,7 +19,7 @@ public class Transaction {
     public int CategoryId { get; set; }  // Foreign Key to Categories table
 
     [ForeignKey("CategoryId")]
-    public Category? Category { get; set; }  // Navigation property to Category
+    public Category Category { get; set; }  // Navigation property to Category
 
     [Required]
     public string? Type { get; set; }  // Income/Expense
@@ -33,4 +33,6 @@ public class Transaction {
     [Required]
     public DateTime Date { get; set; }
     
+    public ICollection<Report> Reports { get; set; }
+
 }
