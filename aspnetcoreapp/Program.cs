@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 // </ms_docref_import_types>
 
 // <ms_docref_add_msal>
@@ -25,6 +28,10 @@ builder.Services.AddRazorPages().AddMvcOptions(options =>
         options.Filters.Add(new AuthorizeFilter(policy));
     }).AddMicrosoftIdentityUI();
 // </ms_docref_add_default_controller_for_sign-in-out>
+
+//Registering DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // <ms_docref_enable_authz_capabilities>
 WebApplication app = builder.Build();
