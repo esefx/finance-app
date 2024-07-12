@@ -33,6 +33,6 @@ public class Transaction {
     [Required]
     public DateTime Date { get; set; }
     
-    public ICollection<Report> Reports { get; set; }
+    public ICollection<ReportTransaction> ReportTransactions { get; set; }
 
 }
