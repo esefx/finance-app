@@ -5,10 +5,6 @@ using System.ComponentModel;
 
 
 public class Transaction {
-    // public Transaction() {
-    //     User = new User(); // Initialize navigation property
-    //     Category = new Category(); // Initialize navigation property
-    // }
    
     [Key]
     public int Id { get; set; }  // Primary Key
@@ -36,4 +32,5 @@ public class Transaction {
 
     [Required]
     public DateTime Date { get; set; }
+    
 }
